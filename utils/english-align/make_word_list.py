@@ -8,7 +8,7 @@ import argparse
 import os
 import glob
 
-def make_word_list(lyrics, dataset_name='dataset1'):
+def make_word_list(lyrics, tmpdir, dataset_name='dataset1'):
     unique_words = set()
 
     lyrics_files = glob.glob(os.path.join(lyrics, '*.txt'))
@@ -32,10 +32,9 @@ def make_word_list(lyrics, dataset_name='dataset1'):
         unique_words.remove(" ")
 
     # create .txt-file
-    word_file_path = 'files/{}_word_list.txt'.format(dataset_name)
-    assert not os.path.isfile(word_file_path), 'file {} exists already. Delete or choose different' \
-                                            ' file to avoid appending to existing file'.format(word_file_path)
-
+    word_file_path = os.path.join(tmpdir, '{}_word_list.txt'.format(dataset_name))
+    if(os.path.exists(word_file_path)):
+        return
     # write words in .txt-file
     words_file = open(word_file_path, 'a')
     for word in sorted(unique_words):
@@ -43,7 +42,7 @@ def make_word_list(lyrics, dataset_name='dataset1'):
     words_file.close()
 
     # create empty .txt-file which will contain the output of the CMU pronuciation dictionary.
-    empty_file_path =  'files/{}_word2phonemes.txt'.format(dataset_name)
+    empty_file_path = os.path.join(tmpdir, '{}_word2phonemes.txt'.format(dataset_name))
     empty_file = open(empty_file_path, 'a')
     empty_file.write('')
     empty_file.close()

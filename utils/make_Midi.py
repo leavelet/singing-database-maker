@@ -3,15 +3,12 @@
 #version: 1.0
 #under mit license
 
-from audioop import add
-from mimetypes import MimeTypes
 import matplotlib.pyplot as plt
 from midiutil import MIDIFile
 import math
 from music21 import midi
 
-def makeMidi(source_filename, Out_filename, tempo=120, MINOTETIME=0, test=False, add_lyrics=False):
-    print("in")
+def makeMidi(source_filename, Out_filename, tempo=120, MINOTETIME=3, test=False, add_lyrics=False):
     track = 0
     channel = 0
     time = 0
@@ -26,11 +23,17 @@ def makeMidi(source_filename, Out_filename, tempo=120, MINOTETIME=0, test=False,
     datNote = []
     last = 0
     lastStart = 0
+    accepted_note = [0, 53, 55, 57, 60, 62, 65, 67, 69]
     for i in range(len(source)):
         if(source[i][1] != last):
             datDuration.append(i - lastStart)# 0.01s per tick
             if i - lastStart >= MINOTETIME:
-                datNote.append(last)
+                if last in accepted_note:
+                    datNote.append(last)
+                else:
+                    smallest = min(accepted_note, key=lambda x:abs(x-last))
+                    datNote.append(smallest)
+
             else:
                 datNote.append(0)
             lastStart = i
@@ -38,10 +41,25 @@ def makeMidi(source_filename, Out_filename, tempo=120, MINOTETIME=0, test=False,
     datDuration.append(len(source) - lastStart)
     datNote.append(last)
     for i in range(len(datNote)):
-        if i != 0 and i != len(datNote)-1 and datNote[i-1]==datNote[i+1] and datNote[i] ==0 and datDuration[i] >= MINOTETIME:
+        if i != 0 and i != len(datNote)-1 and datNote[i-1]==datNote[i+1] and datNote[i] ==0:
             datNote[i] = datNote[i-1]
-            
 
+    for j in range(0, 2):
+        for i in range(len(datNote)):
+            if i != 0 and datNote[i-1]==datNote[i]:
+                datNote[i] = datNote[i-1]
+                datDuration[i-1] += datDuration[i]
+                datDuration[i] = 0
+                datNote[i] = 0
+        notenew = []
+        timenew = []
+        for i in range(len(datNote)):
+            if datDuration[i] != 0 or datNote[i] != 0:
+                notenew.append(datNote[i])
+                timenew.append(datDuration[i])
+        datNote = notenew
+        datDuration = timenew
+        
     if test:
         for i in range(len(datDuration)):
             print("{} {}".format(datDuration[i], datNote[i]))
@@ -61,7 +79,7 @@ def makeMidi(source_filename, Out_filename, tempo=120, MINOTETIME=0, test=False,
 
     for i in range(len(datDuration)):
         duration = math.floor(datDuration[i] / (6000 / (tempo * MyMIDI.ticks_per_quarternote)))
-        if datNote[i] != 0:
+        if datNote[i] != 0 and duration != 0:
             MyMIDI.addNote(track, channel, datNote[i], time, duration, volume)
             if test:
                 print("at {} {} {}".format(time, datNote[i], duration))
@@ -156,8 +174,6 @@ def draw_source(filename, begin, len):
 def test():
     makeMidi("frequency.txt", "test.mid", tempo=100, MINOTETIME=5, test=True)
     draw_source("frequency.txt",0 , 5.88)
-
-
 
 if __name__ == "__main__":
     test()

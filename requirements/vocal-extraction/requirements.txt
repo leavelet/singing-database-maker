@@ -1,0 +1,12 @@
+aicrowd_api
+coloredlogs
+numpy
+loguru
+boto3
+openunmix
+musdb
+SoundFile
+scipy
+norbert
+asteroid>=0.5.0
+demucs==2.0.3

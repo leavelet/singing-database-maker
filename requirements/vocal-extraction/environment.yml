@@ -1,0 +1,26 @@
+name: extract
+channels:
+  - conda-forge
+  - anaconda
+  - defaults
+dependencies:
+  - python=3.9
+  - pip:
+    - onnxruntime==1.7.0
+    - soundfile
+    - aicrowd_api
+    - coloredlogs
+    - colored
+    - numpy
+    - loguru
+    - boto3
+    - openunmix
+    - musdb
+    - SoundFile
+    - scipy
+    - norbert
+    - asteroid>=0.5.0
+    - demucs==2.0.3
+
+prefix: /home/ielab/miniconda3/envs/pytorch
+

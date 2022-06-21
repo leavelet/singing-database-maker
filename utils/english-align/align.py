@@ -15,7 +15,7 @@ import numpy as np
 
 import model
 
-def  jcompute_phoneme_onsets(optimal_path_matrix, hop_length, sampling_rate, return_skipped_idx=False):
+def  compute_phoneme_onsets(optimal_path_matrix, hop_length, sampling_rate, return_skipped_idx=False):
     """
     Args:
         optimal_path_matrix: binary numpy array with shape (N, M)
@@ -159,7 +159,7 @@ def make_phoneme_and_word_list(text_file, word2phoneme_dict):
                     phonemes = word2phoneme_dict[word].split(' ')
                 except KeyError:
                     print("Word {} not found in dictionary".format(word))
-                    open('missing_words.txt', 'a').write(word + '\n')
+                    open('missing.txt', 'a').write(word + '\n')
                     return None, None
                 for p in phonemes:
                     lyrics_phoneme_symbols.append(p)
@@ -185,12 +185,12 @@ def make_phoneme_list(text_file):
 # parser.add_argument('--vad-threshold', type=float, default=0)
 # args = parser.parse_args()
 
-def align(audio_path, lyrics_path, lyrics_format, onsets, dataset_name, vad_threshold):
+def align(audio_path, lyrics_path, lyrics_format, onsets, dataset_name, vad_threshold, output_dir, tmpdir):
     audio_files = sorted(glob.glob(os.path.join(audio_path, '*.wav')))
 
-    pickle_in = open('files/{}_word2phonemes.pickle'.format(dataset_name), 'rb')
+    pickle_in = open(os.path.join(tmpdir, '{}_word2phonemes.pickle'.format(dataset_name)), 'rb')
     word2phonemes = pickle.load(pickle_in)
-    pickle_in = open('files/phoneme2idx.pickle', 'rb')
+    pickle_in = open(os.path.join(tmpdir, 'phoneme2idx.pickle'), 'rb')
     phoneme2idx = pickle.load(pickle_in)
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -204,9 +204,9 @@ def align(audio_path, lyrics_path, lyrics_format, onsets, dataset_name, vad_thre
     lyrics_aligner.load_state_dict(state_dict)
 
     if onsets in ['p', 'pw']:
-        os.makedirs('outputs/{}/phoneme_onsets'.format(dataset_name), exist_ok=True)
+        os.makedirs(os.path.join(output_dir, '{}/phoneme_onsets'.format(dataset_name)), exist_ok=True)
     if onsets in ['w', 'pw']:
-        os.makedirs('outputs/{}/word_onsets'.format(dataset_name), exist_ok=True)
+        os.makedirs(os.path.join(output_dir, '{}/word_onsets'.format(dataset_name)), exist_ok=True)
 
     for audio_file_path in audio_files:
 
@@ -256,11 +256,11 @@ def align(audio_path, lyrics_path, lyrics_format, onsets, dataset_name, vad_thre
             # save phoneme onsets
             if phoneme_onsets == []:
                 print('No phoneme onsets found for {}'.format(file_name))
-                with open("wrong.txt", "w") as w:
+                with open("missing.txt", "w") as w:
                     print(file_name, file=w)
                 raise RuntimeError("空列表")
             
-            p_file = open('outputs/{}/phoneme_onsets/{}.txt'.format(dataset_name, file_name), 'a')
+            p_file = open(os.path.join(output_dir, '{}/phoneme_onsets/{}.txt'.format(dataset_name, file_name)), 'a')
             for m, symb in enumerate(lyrics_phoneme_symbols):
                 p_file.write(symb + '\t' + str(phoneme_onsets[m]) + '\n')
             p_file.close()
@@ -268,13 +268,13 @@ def align(audio_path, lyrics_path, lyrics_format, onsets, dataset_name, vad_thre
         if onsets in ['w', 'pw']:
             if phoneme_onsets == []:
                 print('No phoneme onsets found for {}'.format(file_name))
-                with open("wrong.txt", "w") as w:
+                with open("missing.txt", "w") as w:
                     print(file_name, file=w)
                 raise RuntimeError("空列表")
             word_onsets, word_offsets = compute_word_alignment(lyrics_phoneme_symbols, phoneme_onsets)
 
             # save word onsets
-            w_file = open('outputs/{}/word_onsets/{}.txt'.format(dataset_name, file_name), 'a')
+            w_file = open(os.path.join(output_dir, '{}/word_onsets/{}.txt'.format(dataset_name, file_name)), 'a')
             for m, word in enumerate(word_list):
                 w_file.write(word + '\t' + str(word_onsets[m]) + '\n')
             w_file.close()
