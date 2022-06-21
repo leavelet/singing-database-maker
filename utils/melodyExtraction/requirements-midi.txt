@@ -1,0 +1,6 @@
+pymus
+music21
+librosa
+mido
+numpy
+argparse

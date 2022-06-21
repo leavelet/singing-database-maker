@@ -1,0 +1,1 @@
+python align.py wav lyrc --lyrics-format p --onsets p

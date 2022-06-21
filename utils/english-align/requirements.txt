@@ -1,0 +1,2 @@
+decorator==4.4.1
+  - cudatoolkit=9.2
