@@ -2,7 +2,7 @@
 
 ## Preface
 
-High quality data is always a problem of singing voice synthesis. And it's really laborious to make a database from scrach. We hope AI can make the process a lot easier, so every music lover can make his own synthesised song.
+High quality data is always a problem of singing voice synthesis. And it's really laborious to make a database from scratch. We hope AI can make the process a lot easier, so every music lover can make his own synthesised song.
 
 Hopefully, there are just tools satisfy our needs. We combine them and a tool to ease the process.Thanks to all the contibuters of these grate researches. We list them below, so you can go and check their work:
 
@@ -11,6 +11,8 @@ Hopefully, there are just tools satisfy our needs. We combine them and a tool to
 > [2] Xianming Li. XMNLP: A Lightweight Chinese Natural Language Processing Toolkit. https://github.com/SeanLee97/ xmnlp. 2018.
 >
 > [3] Kilian Schulze-Forster et al. “Phoneme Level Lyrics Alignment and Text-Informed Singing Voice Separation”. In: IEEE/ACM Transactions on Audio, Speech, and Language Processing 29 (2021), pp. 2382–2395. DOI: 10.1109/TASLP.2021. 3091817.
+>
+> [4] Intelligence Engineering Lab @ Korea University. mdx-net-submission: Music demixer. https://github.com/kuielab/mdx-net-submission 2021.
 
 
 
@@ -18,7 +20,7 @@ Hopefully, there are just tools satisfy our needs. We combine them and a tool to
 
 Notice: The project now support English songs only, with Chinese support in  early development. The key is Phoneme Level Lyrics Alignment module, we assume we can deal with it this summer.
 
-List here so you can have a genneral idea of whether the project suits your needs.
+We list input and outpit of thetoolkit here, so you can have a genneral idea of whether the project suits your needs.
 
 Input: songs and their .lrc format lyrics.
 
@@ -37,7 +39,7 @@ We plan to add:
 
 ## Steps
 
-### general introduction
+### Introduction
 
 suppose you have a song called foo. the processed database folder will be like this: (only list the tools you will use)
 
@@ -84,7 +86,7 @@ suppose you have a song called foo. the processed database folder will be like t
 
 
 
-### environment preparation
+### Environment preparation
 
 When dealing with mutiple AI projects, it will make your life much easier to set up the environment properly at first step. We've had a hard time dealing with all of this, and we found you can use the project on your own pc if you set correctly.
 
@@ -102,13 +104,13 @@ When dealing with mutiple AI projects, it will make your life much easier to set
 
     
 
-### seperate the song
+### Seperate the song
 
-### demix the slice
+### Demix the slices
 
-### generate midi notes and make midi
+### Generate midi notes and make midi
 
-### generate phoneme Level Lyrics Alignment
+### Generate phoneme Level Lyrics Alignment
 
 
 
