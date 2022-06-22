@@ -29,6 +29,8 @@ sum = 0;
 for dir in os.listdir(config.path_of_slice):
     if dir.startswith(".") or os.path.exists(os.path.join(config.tmpdir, dir + "_word2phonemes.txt")) == False:
         continue
+    if os.path.exists(os.path.join(config.tmpdir, dir + "_word2phonemes.pickle")):
+        continue
     sum += 1
     song_path = os.path.join(config.path_of_slice, dir)
     make_word2phoneme_dict.make_word2phoneme_dict(dir, tmpdir=config.tmpdir)
