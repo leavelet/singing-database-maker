@@ -1,8 +1,7 @@
 [submodule "phoneme_from_word"]
 	path = utils/english-align/phoneme_from_word
 	url = git@github.com:leavelet/phoneme_from_word.git
-[submodule "vocal-extraction"]
+[submodule "utils/vocal-extraction"]
 	path = utils/vocal-extraction
 	url = git@github.com:leavelet/vocal-extraction.git
-[submodule "utils/vocal-extraction"]
 	branch = gpu
