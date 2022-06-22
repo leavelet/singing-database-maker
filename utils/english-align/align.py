@@ -200,7 +200,7 @@ def align(audio_path, lyrics_path, lyrics_format, onsets, dataset_name, vad_thre
 
     # load model
     lyrics_aligner = model.InformedOpenUnmix3().to(device)
-    state_dict = torch.load('model_parameters.pth', map_location=device)
+    state_dict = torch.load(os.path.join(tmpdir, 'model_parameters.pth'), map_location=device)
     lyrics_aligner.load_state_dict(state_dict)
 
     if onsets in ['p', 'pw']:

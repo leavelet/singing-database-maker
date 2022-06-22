@@ -3,24 +3,23 @@
 #version: 1.0
 #under mit license
 
-from logging import shutdown
+#warning: not tested yet, do not use!
+
 import os
 import shutil
+import config
 
-for dir in os.listdir("./slice"):
-    if os.path.isdir("./slice/" + dir):
-        name = dir
-        parent = dir[0:4]
-        if os.path.exists("./pitch/" + name + ".pitch") \
-            and os.path.exists("./align/dataset"+parent + "/phoneme_onsets/" + name + ".txt"):
+for dir in os.listdir(config.path_of_slice):
+    if os.path.isdir(os.path.join(config.path_of_slice + dir)):
+        if os.path.exists(os.path.join(config.path_of_pitch,  "pitch_" + dir + ".txt")) \
+            and os.path.exists(os.path.join(config.path_of_align, dir, "phoneme_onsets", dir+'.txt')):
             continue
         else:
-            print("delete " + name)
-            shutil.rmtree("./slice/" + name)
-            if os.path.exists("./align/dataset"+parent + "/phoneme_onsets/" + name + ".txt"):
-                os.remove("./align/dataset"+parent + "/phoneme_onsets/" + name + ".txt")
-            if os.path.exists("./align/dataset"+parent + "/phoneme_offsets/" + name + ".txt"):
-                os.remove("./align/dataset"+parent + "/phoneme_offsets/" + name + ".txt")
-            if os.path.exists("./pitch/" + name + ".pitch"):
-                os.remove("./pitch/" + name + ".pitch")
+            print("delete " + dir)
+            shutil.rmtree(os.path.join(config.path_of_slice, dir))
+            if os.path.exists(os.path.join(config.path_of_pitch,  "pitch_" + dir + ".txt")):
+                os.remove(os.path.join(config.path_of_pitch,  "pitch_" + dir + ".txt"))
+            if os.path.exists(os.path.join(config.path_of_align, dir)):
+                shutil.rmtree(os.path.join(config.path_of_align, dir))
+
             
