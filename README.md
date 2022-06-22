@@ -37,6 +37,53 @@ We plan to add:
 
 ## Steps
 
+### general introduction
+
+suppose you have a song called foo. the processed database folder will be like this: (only list the tools you will use)
+
+```shell
+ - origin
+ 	- foo.wav
+ 	- foo.lrc
+ - processed_data
+ 	- vocal
+ 	- slice
+ 		- foo00150019
+ 			foo00150019.wav
+ 			foo00150019.txt
+ 		- ...
+ 	- pitch
+ 		- pitch_foo00150019
+ 		- ...
+ 	- midi
+ 		- foo00150019.mid
+ 		- ...
+ 	- align
+ 		- foo00150019
+ 			- phoneme_onsets
+ 				- foo00150019.txt
+ 			- word_onsets
+ 				- foo00150019.txt
+ - utils
+ 	- english-align
+ 		- phoneme_from_word
+ 		- make_phoe.py
+ 	- melodyExtraction
+ 		- gen_freq.py
+ 	- vocal-extraction
+ 	- config.py
+    - song_cutter.py
+    - demix_vocal.py
+    - gen_midi.py
+    - make_Midi.py
+    - make_lab.py (not finished)
+    - make_musicxml.py (not finished)
+    - delete_useless.py (not tested)
+    - missing.txt (generate after align)
+```
+
+
+
 ### environment preparation
 
 When dealing with mutiple AI projects, it will make your life much easier to set up the environment properly at first step. We've had a hard time dealing with all of this, and we found you can use the project on your own pc if you set correctly.
@@ -51,7 +98,7 @@ When dealing with mutiple AI projects, it will make your life much easier to set
     conda create -n music-dealer
     ```
 
-    ### not finished, update on 6.28
+    ### not finished, next update on 6.28
 
     
 
