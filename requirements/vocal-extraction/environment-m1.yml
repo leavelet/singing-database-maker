@@ -1,4 +1,4 @@
-name: pytorch
+name: vocal-extract
 channels:
   - conda-forge
   - anaconda

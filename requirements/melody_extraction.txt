@@ -6,3 +6,5 @@ numpy==1.18.5
 SciPy==1.1.0
 pysndfx==0.3.6
 tensorflow-gpu==1.15.5
+decorator==4.4.1
+cudatoolkit=9.2

@@ -94,14 +94,29 @@ When dealing with mutiple AI projects, it will make your life much easier to set
 
     We use recommand conda, and we take this as an example
 
-2. crate environment for song-cutter and those non-AI program
+2. crate environments
 
     ```shell
-    conda create -n music-dealer
+    cd requirements
+    
+    # misc
+    conda create -n singing-dealer
+    conda activate singing-dealer
+    pip install -r make_midi.txt
+    
+    # vocal extraction
+    conda env create -f vocal-extraction/environment.yml 
+    #if you use arm mac, use environment-m1.yml
+    conda activate vocal-extraction
+    pip install -r vocal-extraction/requirements.txt
+    
+    # alignment & melody extraction
+    conda env create -f vocal-extraction/maker_ai_cpu.yml
+    # if you have gpu, use maker_ai_gpu.yml
+    conda activate maker_ai
+    pip install -r melody_extraction.txt
     ```
-
-    ### not finished, next update on 6.28
-
+    
     
 
 ### Seperate the song
