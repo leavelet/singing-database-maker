@@ -97,24 +97,24 @@ When dealing with mutiple AI projects, it will make your life much easier to set
 2. crate environments
 
     ```shell
-    cd requirements
+    $ cd requirements
     
     # misc
-    conda create -n singing-dealer
-    conda activate singing-dealer
-    pip install -r make_midi.txt
+    $ conda create -n singing-dealer
+    $ conda activate singing-dealer
+    $ pip install -r make_midi.txt
     
     # vocal extraction
-    conda env create -f vocal-extraction/environment.yml 
+    $ conda env create -f vocal-extraction/environment.yml 
     #if you use arm mac, use environment-m1.yml
-    conda activate vocal-extraction
-    pip install -r vocal-extraction/requirements.txt
+    $ conda activate vocal-extraction
+    $ pip install -r vocal-extraction/requirements.txt
     
     # alignment & melody extraction
-    conda env create -f vocal-extraction/maker_ai_cpu.yml
+    $ conda env create -f vocal-extraction/maker_ai_cpu.yml
     # if you have gpu, use maker_ai_gpu.yml
-    conda activate maker_ai
-    pip install -r melody_extraction.txt
+    $ conda activate maker_ai
+    $ pip install -r melody_extraction.txt
     ```
     
     
