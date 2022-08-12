@@ -84,7 +84,15 @@ suppose you have a song called foo. the processed database folder will be like t
     - missing.txt (generate after align)
 ```
 
+### Project download
 
+ Download the full project, and its submodules.
+   
+   We use submodules to ease our development, so you must use `--recurse-submodules` to clone the full project.
+
+```shell
+$ git clone --recurse-submodules git@github.com:leavelet/singing-database-maker.git
+```
 
 ### Environment preparation
 
@@ -92,7 +100,7 @@ When dealing with mutiple AI projects, it will make your life much easier to set
 
 1. install a python virtual environment manager
 
-    We use recommand conda, and we take this as an example
+    We use recommand conda, and we take conda as an example.
 
 2. crate environments
 
@@ -105,7 +113,7 @@ When dealing with mutiple AI projects, it will make your life much easier to set
     $ pip install -r make_midi.txt
     
     # vocal extraction
-    $ conda env create -f vocal-extraction/environment.yml 
+    $ conda env create -f vocal-extraction/environment.yml
     #if you use arm mac, use environment-m1.yml
     $ conda activate vocal-extraction
     $ pip install -r vocal-extraction/requirements.txt
@@ -116,17 +124,44 @@ When dealing with mutiple AI projects, it will make your life much easier to set
     $ conda activate maker_ai
     $ pip install -r melody_extraction.txt
     ```
-    
-    
 
-### Seperate the song
+3. Download models
+   1. Download demucs models
+   
+    ```shell
+    $ conda activate vocal-extract
+    $ python download_demucs.py
+    ```
+
+    2. Download onnx models
+    
+    Download the models from [release page](https://github.com/leavelet/singing-database-maker/tags), put them under `utils/vocal-extracion/onnx`folder.
+
+
+4. download the [make_dic tool](https://github.com/leavelet/phoneme_from_word/releases/tag/v1.0.1) and put it under project root directory
+
+### *from now on, We assume your current dir is `utils`*
+
+### Setup your own config
+
+We use `config.py` to control the whole project. All the files are programmed to follow settings.
+
+1. set the project root.
+
+    Project root is parent folder of utils. We use `..` to mark the root since we are in `utils`folder, but an absolute path is recommanded, to avoid mistakes like forgetting to change back to `utils` after operation.
+
+2. set your thread_num.
+
+    We use parallelism to accelerate processing. Set the `thread_num` to a proper number to make full use of your processor. Default is 10.
+
+
+### Seperate songs
 
 ### Demix the slices
 
 ### Generate midi notes and make midi
 
 ### Generate phoneme Level Lyrics Alignment
-
 
 
 ## License and acknowledgement
